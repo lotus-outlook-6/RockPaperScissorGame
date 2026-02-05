@@ -189,8 +189,10 @@ header h1 {
 }
 
 #result-message {
-    font-size: 1.25rem;
-    font-weight: 500;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 /* Controls */
@@ -236,16 +238,18 @@ header h1 {
 
 /* Animations */
 .shaking {
-    animation: shake-comp 1.5s ease-in-out infinite;
+    animation: shake-comp 0.5s ease-in-out infinite;
     display: inline-block;
 }
 
 @keyframes shake-comp {
-    0% {
+
+    0%,
+    100% {
         transform: translateY(0);
     }
 
-    15% {
+    50% {
         transform: translateY(-30px);
     }
 
