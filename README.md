@@ -1,4 +1,4 @@
-# Rock Paper Scissors - Cyber Edition �🤚✌️
+# Rock Paper Scissors - Cyber Edition ✊🤚✌️
 
 A premium, high-fidelity web application based on the original Antigravity Rock Paper Scissors logic. Experience the classic game with a modern cyberpunk aesthetic and seamless mobile-optimized gameplay.
 
@@ -22,7 +22,7 @@ A premium, high-fidelity web application based on the original Antigravity Rock 
 
 ---
 
-## � Running Locally
+## 💻 Running Locally
 
 ### 🌐 Web Version
 To run the modern web interface:
