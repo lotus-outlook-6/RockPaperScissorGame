@@ -8,10 +8,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-twilight.min.css" rel="stylesheet" />
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/line-numbers/prism-line-numbers.min.css"
         rel="stylesheet" />
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="assets/google-antigravity-default.png">
 </head>
 
 <body>
@@ -24,6 +25,13 @@
     <main class="glass-container">
         <header>
             <h1>Rock Paper Scissors</h1>
+            <div class="emoji-toggle-container">
+                <label class="switch-toggle" title="Switch Emojis">
+                    <input type="checkbox" id="emoji-theme-toggle">
+                    <span class="slider"></span>
+                    <span class="labels" data-on="Objects" data-off="Hands"></span>
+                </label>
+            </div>
             <div class="score-board">
                 <div class="score-card user">
                     <span class="label">YOU</span>
@@ -66,8 +74,6 @@
                 <span>Scissors</span>
             </button>
         </section>
-
-        <button id="reset-btn" class="reset-btn hidden">Play Again</button>
     </main>
 
     <!-- Code Icon -->
@@ -82,10 +88,15 @@
                 👁️ Show Comments
             </button>
             <div class="spacer" style="flex:1"></div>
+            <button id="copy-code-btn" class="toggle-btn" style="margin-right: 10px;">
+                📋 Copy Code
+            </button>
             <button class="close-btn">&times;</button>
         </div>
-        <div class="code-content">
-            <pre class="line-numbers"><code class="language-python">import random
+        <div class="code-body-container">
+            <div id="line-numbers-gutter" class="gutter"></div>
+            <div class="code-scroll-area">
+                <pre class="no-line-numbers"><code class="language-python">import random
 def delay():
     l=["Rock","Paper","Scissors"]
     for i in range(3):
@@ -104,7 +115,6 @@ user=input("\nEnter r for Rock, p for Paper, s for Scissors: ")
 compDict={1:"Rock",2:"Paper",3:"Scissors"}
 userDict={"r":"Rock","p":"Paper","s":"Scissors"}
 
-
 print("Computer is choosing\n", end="")
 delay()
 
@@ -118,6 +128,7 @@ elif (compDict[comp]=="Rock" and userDict[user]=="Paper") or (compDict[comp]=="P
     print("You Win, Computer Lost")
 else:
     print("Invalid Input")</code></pre>
+            </div>
         </div>
     </div>
 

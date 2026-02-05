@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
 :root {
     --bg-color: #0f172a;
     --glass-bg: rgba(255, 255, 255, 0.05);
@@ -16,18 +18,59 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Outfit', sans-serif;
 }
 
 body {
-    background-color: var(--bg-color);
-    color: var(--text-main);
+    font-family: 'Outfit', sans-serif;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: white;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    position: relative;
+    cursor: url('assets/default.svg'), auto;
+    /* Default Body Cursor */
+}
+
+/* Explicit Interactive Elements -> Hand Cursor */
+button,
+a,
+.switch-toggle,
+.close-btn,
+.icon,
+input[type="checkbox"],
+.slider,
+.option-btn,
+label,
+select,
+summary {
+    cursor: url('assets/handpointing.svg'), pointer !important;
+}
+
+/* Prevent flickering: Children of interactive elements inherit cursor */
+button *,
+a *,
+.switch-toggle *,
+label *,
+.option-btn * {
+    cursor: inherit !important;
+}
+
+/* Text Inputs and Code -> Text Cursor */
+input[type="text"],
+input[type="number"],
+textarea,
+code,
+pre,
+.selectable-text {
+    cursor: url('assets/textcursor.svg'), text !important;
+}
+
+/* Ensure tokens inside pre/code inherit the custom cursor */
+pre *,
+code * {
+    cursor: inherit !important;
 }
 
 /* Background Blobs */
@@ -98,18 +141,37 @@ body {
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
+    /* Reduced from 2rem */
     text-align: center;
 }
 
-header h1 {
+header {
+    margin-bottom: 0.5rem;
+    /* Reduced from 2.5rem */
+    position: relative;
+    padding: 10px 0;
+}
+
+h1 {
     font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    background: linear-gradient(to right, var(--primary), --accent);
+    font-weight: 800;
+    margin: 0;
+    /* Remove margin-bottom for center-alignment */
+    background: linear-gradient(to right, #fff, #a29bfe);
     -webkit-background-clip: text;
-    color: white;
-    /* Fallback */
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+}
+
+/* Emoji Switch */
+.emoji-toggle-container {
+    position: absolute;
+    top: 50%;
+    /* Center vertically relative to header */
+    transform: translateY(-50%);
+    right: 1rem;
 }
 
 /* Score Board */
@@ -117,34 +179,46 @@ header h1 {
     display: flex;
     justify-content: center;
     gap: 2rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    /* Reduced from 2rem */
+    margin-top: 0.5rem;
+    /* Reduced from 1rem */
+    /* Reduced from 4rem */
 }
 
 .score-card {
     background: rgba(0, 0, 0, 0.2);
-    padding: 0.75rem 1.5rem;
+    padding: 0.8rem 1.5rem;
+    /* Reduced from 1.5rem 2.5rem */
     border-radius: 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 80px;
+    min-width: 90px;
+    /* Reduced from 120px */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .score-card .label {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
+    /* Reduced from 1rem */
     color: var(--text-muted);
-    font-weight: 500;
-    letter-spacing: 1px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    margin-bottom: 0.25rem;
 }
 
 .score-card span[id$="-score"] {
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 1.8rem;
+    /* Reduced from 2.5rem */
+    font-weight: 800;
+    line-height: 1;
 }
 
 /* Game Area */
 .game-area {
-    min-height: 200px;
+    min-height: 120px;
+    /* Reduced from 200px */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -492,17 +566,88 @@ body.code-active .code-panel {
     color: white;
 }
 
-.close-btn {
-    color: #ccc;
-    font-size: 1.5rem;
+/* Emoji Switch */
+.emoji-toggle-container {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+.switch-toggle {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+}
+
+.switch-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
     cursor: pointer;
-    background: none;
-    border: none;
-    line-height: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: .4s;
+    border-radius: 34px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.slider:before {
+    position: absolute;
+    content: "🤜";
+    /* Hands Default */
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 24px;
+    width: 24px;
+    left: 3px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+input:checked+.slider:before {
+    transform: translateX(28px);
+    content: "✂️";
+    /* Objects Active: Scissors */
+}
+
+/* Close Button Improved */
+.close-btn {
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    margin-left: 10px;
 }
 
 .close-btn:hover {
-    color: white;
+    background: #ff5f56;
+    border-color: #ff5f56;
+    transform: rotate(90deg);
 }
 
 /* Custom Scrollbar */
@@ -524,72 +669,106 @@ body.code-active .code-panel {
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* Code Content */
-.code-content {
+/* Code Body Container */
+.code-body-container {
+    display: flex;
     flex: 1;
     overflow: hidden;
-    /* Container hides override */
-    background: transparent;
-    padding: 0;
-    display: flex;
     position: relative;
+    height: 100%;
+}
+
+/* Sidebar Gutter */
+.gutter {
+    width: 3.8rem;
+    background: #1e1e1e;
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+    overflow: hidden;
+    /* Programmatic Scroll */
+    padding-top: 1.5rem;
+    text-align: right;
+    padding-right: 0.8rem;
+    box-sizing: border-box;
+    flex-shrink: 0;
+
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #858585;
+    user-select: none;
+    z-index: 20;
+}
+
+.gutter span {
+    display: block;
+}
+
+/* Scroll Area */
+.code-scroll-area {
+    flex: 1;
+    overflow: auto;
+    padding: 0;
 }
 
 /* Prism Overrides */
 pre[class*="language-"] {
     margin: 0 !important;
     padding: 1.5rem !important;
+    /* Standard padding */
     background: transparent !important;
     text-shadow: none !important;
     font-family: 'Consolas', 'Monaco', monospace !important;
     font-size: 0.95rem !important;
     line-height: 1.6 !important;
-    overflow: auto !important;
-    /* This enables scrollbars */
     white-space: pre !important;
-    /* Force no wrap for horizontal scroll */
-    width: 100%;
-    height: 100%;
+
+    /* Ensure code expands if needed */
+    width: fit-content;
+    min-width: 100%;
 }
 
-/* VS Code Dark+ Theme Colors */
+/* Hide Prism's line numbers if present */
+pre[class*="language-"].line-numbers {
+    padding-left: 1.5rem !important;
+    /* Reset padding */
+}
+
+.line-numbers .line-numbers-rows {
+    display: none !important;
+}
+
+.line-numbers-rows>span:before {
+    content: counter(linenumber);
+    color: #858585;
+    display: block;
+    padding-right: 0.8em;
+    text-align: right;
+}
+
+/* VS Code Dark+ Custom Theme */
 .token.comment,
 .token.prolog,
 .token.doctype,
 .token.cdata {
-    color: #397A55;
-    /* User defined green */
+    color: #397A55 !important;
+    /* User requested green */
     font-style: italic;
+    opacity: 1 !important;
 }
 
 .token.punctuation {
     color: #d4d4d4;
-    /* Grey punctuation */
-}
-
-.token.namespace {
-    opacity: .7;
-}
-
-.token.property,
-.token.tag,
-.token.boolean,
-.token.number,
-.token.constant,
-.token.symbol,
-.token.deleted {
-    color: #b5cea8;
-    /* Light green numbers/constants */
 }
 
 .token.selector,
+.token.tag,
 .token.attr-name,
 .token.string,
 .token.char,
 .token.builtin,
 .token.inserted {
     color: #ce9178;
-    /* Orange strings */
+    /* Strings - Orange */
 }
 
 .token.operator,
@@ -598,8 +777,48 @@ pre[class*="language-"] {
 .language-css .token.string,
 .style .token.string {
     color: #d4d4d4;
-    /* operators grey */
 }
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+    color: #569cd6;
+    /* Keywords - Blue */
+}
+
+.token.function,
+.token.class-name {
+    color: #dcdcaa;
+    /* Functions - Yellow */
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+    color: #9cdcfe;
+    /* Variables - Light Blue */
+}
+
+.token.important,
+.token.bold {
+    font-weight: bold;
+}
+
+.token.italic {
+    font-style: italic;
+}
+
+.token.number {
+    color: #b5cea8;
+    /* Numbers - Light Green */
+}
+
+.token.boolean {
+    color: #569cd6;
+    /* Booleans - Blue */
+}
+
+
 
 .token.atrule,
 .token.attr-value,
@@ -641,4 +860,115 @@ pre[class*="language-"] {
 .hand-container {
     min-width: 80px;
     /* Reserve space */
+}
+
+/* Mobile Optimization */
+@media (max-width: 600px) {
+    .glass-container {
+        padding: 1.25rem 0.75rem;
+        gap: 0.5rem;
+        width: 95%;
+        margin: 10px auto;
+        max-width: 100vw;
+        overflow: hidden;
+        /* Prevent edge bleed */
+    }
+
+    h1 {
+        font-size: 1.1rem;
+        padding-right: 40px;
+        /* Make room for absolute switch */
+        text-align: left;
+        /* Better for tight spaces */
+    }
+
+    .emoji-toggle-container {
+        right: 0.5rem;
+    }
+
+    .score-board {
+        gap: 0.5rem;
+    }
+
+    .score-card {
+        padding: 0.5rem;
+        min-width: 0;
+        flex: 1;
+        /* Equal width cards */
+    }
+
+    .score-card span[id$="-score"] {
+        font-size: 1.25rem;
+    }
+
+    .game-area {
+        min-height: 80px;
+    }
+
+    .hand-container {
+        font-size: 2.5rem;
+        min-width: 60px;
+    }
+
+    .hand-emoji {
+        font-size: 2.5rem;
+    }
+
+    .player-label {
+        font-size: 0.6rem;
+        letter-spacing: 1px;
+    }
+
+    h2#msg {
+        font-size: 0.9rem;
+        white-space: nowrap;
+    }
+
+    .options {
+        gap: 0.5rem;
+        justify-content: center;
+    }
+
+    .option-btn {
+        padding: 0.6rem;
+        min-width: 0;
+        flex: 1;
+        max-width: 80px;
+    }
+
+    .symbol {
+        font-size: 1.25rem;
+    }
+
+    .button-label {
+        font-size: 0.6rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .glass-container {
+        padding: 0.75rem 0.4rem;
+    }
+
+    .hand-container {
+        font-size: 2rem;
+        min-width: 45px;
+    }
+
+    .hand-emoji {
+        font-size: 2rem;
+    }
+
+    .options {
+        gap: 0.25rem;
+    }
+
+    .option-btn {
+        padding: 0.4rem;
+        min-width: 0;
+    }
+
+    .score-card span[id$="-score"] {
+        font-size: 1.1rem;
+    }
 }

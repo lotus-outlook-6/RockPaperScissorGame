@@ -6,14 +6,29 @@ const elements = {
     compScore: document.getElementById('comp-score'),
     options: document.querySelectorAll('.option-btn'),
     gameArea: document.querySelector('.game-area'),
-    resetBtn: document.getElementById('reset-btn')
+    // resetBtn removed
 };
 
-const choices = {
-    rock: { emoji: '🤜', beats: 'scissors' },
-    paper: { emoji: '🤚', beats: 'rock' },
-    scissors: { emoji: '✌️', beats: 'paper' }
+// Emojis
+const emojiThemes = {
+    hands: {
+        rock: { emoji: '🤜', beats: 'scissors' },
+        paper: { emoji: '🤚', beats: 'rock' },
+        scissors: { emoji: '✌️', beats: 'paper' },
+        compDefault: '🤛',
+        userDefault: '🤜'
+    },
+    objects: {
+        rock: { emoji: '🪨', beats: 'scissors' },
+        paper: { emoji: '📄', beats: 'rock' },
+        scissors: { emoji: '✂️', beats: 'paper' },
+        compDefault: '❓',
+        userDefault: '❓'
+    }
 };
+
+let currentTheme = 'hands';
+let choices = emojiThemes[currentTheme];
 
 let isAnimating = false;
 let userScore = 0;
@@ -23,9 +38,27 @@ let compScore = 0;
 const viewCodeBtn = document.getElementById('view-code-btn');
 const closeBtn = document.querySelector('.close-btn');
 const body = document.body;
-const codeContent = document.querySelector('.code-content');
-const codeBlock = codeContent.querySelector('code');
+// New Selectors for Split Layout
+const codeBodyContainer = document.querySelector('.code-body-container');
+const codeScrollArea = document.querySelector('.code-scroll-area');
+const gutter = document.getElementById('line-numbers-gutter');
+const codeBlock = document.querySelector('code');
 const toggleCommentsBtn = document.getElementById('toggle-comments-btn');
+
+// Toggle Emojis
+const emojiToggle = document.getElementById('emoji-theme-toggle');
+if (emojiToggle) {
+    emojiToggle.addEventListener('change', (e) => {
+        currentTheme = e.target.checked ? 'objects' : 'hands';
+        choices = emojiThemes[currentTheme];
+
+        // Update display if not animating
+        if (!isAnimating) {
+            elements.userHand.textContent = choices.userDefault;
+            elements.compHand.textContent = choices.compDefault;
+        }
+    });
+}
 
 // Full Source Code (Commented Version)
 const fullSourceCode = `import random  # Importing random module to allow the computer to make a random choice
@@ -120,42 +153,76 @@ elif (compDict[comp]=="Rock" and userDict[user]=="Paper") or (compDict[comp]=="P
 else:
     print("Invalid Input")`;
 
-let isCommentsVisible = true; // Default showing full source as provided
+// Default to CLEAN code (false)
+let isCommentsVisible = false;
 let typeInterval;
+
+function updateLineNumbers(text) {
+    if (!gutter) return;
+    const lineCount = text.split('\n').length;
+    // Generate spans for each line number
+    gutter.innerHTML = Array(lineCount).fill(0).map((_, i) => `<span>${i + 1}</span>`).join('');
+}
 
 function typeWriter(text, isReverse = false, onComplete) {
     clearInterval(typeInterval);
-    const speed = isReverse ? 2 : 5; // Erase fast, type moderately
-    const step = isReverse ? 50 : 5; // Erase chunks, type small chunks
 
-    typeInterval = setInterval(() => {
-        let current = codeBlock.textContent;
-
-        if (isReverse) {
+    if (isReverse) {
+        // Fast erase animation
+        const speed = 2;
+        const step = 50;
+        typeInterval = setInterval(() => {
+            let current = codeBlock.textContent;
             if (current.length <= 0) {
                 clearInterval(typeInterval);
+                codeBlock.textContent = '';
+                updateLineNumbers('');
                 if (onComplete) onComplete();
             } else {
                 codeBlock.textContent = current.substring(0, current.length - step);
             }
-        } else {
-            if (current.length >= text.length) {
-                clearInterval(typeInterval);
-                if (window.Prism) Prism.highlightElement(codeBlock);
-                if (onComplete) onComplete();
-            } else {
-                codeBlock.textContent = text.substring(0, current.length + step);
-            }
+        }, speed);
+    } else {
+        // Show code with syntax highlighting
+        codeBlock.style.opacity = '0';
+        codeBlock.textContent = text;
+        updateLineNumbers(text);
+
+        if (window.Prism) {
+            Prism.highlightElement(codeBlock);
+            // Force comment visibility
+            const comments = codeBlock.querySelectorAll('.token.comment');
+            comments.forEach(comment => {
+                comment.style.color = '#397A55';
+                comment.style.opacity = '1';
+                comment.style.display = 'inline';
+            });
         }
-    }, speed);
+
+        // Fade in
+        setTimeout(() => {
+            codeBlock.style.transition = 'opacity 0.3s ease';
+            codeBlock.style.opacity = '1';
+            setTimeout(() => {
+                codeBlock.style.transition = '';
+                if (onComplete) onComplete();
+            }, 300);
+        }, 50);
+    }
 }
 
-// Open Code View
+// Open/Close Code View (Toggle Logic)
 viewCodeBtn.addEventListener('click', () => {
-    body.classList.add('code-active');
-    codeBlock.textContent = ''; // Clear start
-    // Animate typing
-    typeWriter(isCommentsVisible ? fullSourceCode : cleanSourceCode, false);
+    if (body.classList.contains('code-active')) {
+        body.classList.remove('code-active');
+        clearInterval(typeInterval);
+    } else {
+        body.classList.add('code-active');
+        codeBlock.textContent = '';
+        const initialText = isCommentsVisible ? fullSourceCode : cleanSourceCode;
+        toggleCommentsBtn.textContent = isCommentsVisible ? '👁️ Hide Comments' : '👁️ Show Comments';
+        typeWriter(initialText, false);
+    }
 });
 
 // Close Code View
@@ -164,19 +231,49 @@ closeBtn.addEventListener('click', () => {
     clearInterval(typeInterval);
 });
 
+// Sync Scroll
+if (codeScrollArea && gutter) {
+    codeScrollArea.addEventListener('scroll', () => {
+        gutter.scrollTop = codeScrollArea.scrollTop;
+    });
+}
+
 // Toggle Comments Logic
 toggleCommentsBtn.addEventListener('click', () => {
-    // Current state is isCommentsVisible. If true, we want to go clean.
     const targetCode = isCommentsVisible ? cleanSourceCode : fullSourceCode;
+    toggleCommentsBtn.style.pointerEvents = 'none';
 
-    // 1. Erase current
     typeWriter('', true, () => {
-        // 2. Type new
         isCommentsVisible = !isCommentsVisible;
         toggleCommentsBtn.textContent = isCommentsVisible ? '👁️ Hide Comments' : '👁️ Show Comments';
-        typeWriter(targetCode, false);
+        typeWriter(targetCode, false, () => {
+            toggleCommentsBtn.style.pointerEvents = 'all';
+        });
     });
 });
+
+// Copy Code Button
+const copyCodeBtn = document.getElementById('copy-code-btn');
+if (copyCodeBtn) {
+    copyCodeBtn.addEventListener('click', async () => {
+        const codeToCopy = isCommentsVisible ? fullSourceCode : cleanSourceCode;
+
+        try {
+            await navigator.clipboard.writeText(codeToCopy);
+            const originalText = copyCodeBtn.textContent;
+            copyCodeBtn.textContent = '✅ Copied!';
+            setTimeout(() => {
+                copyCodeBtn.textContent = originalText;
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy:', err);
+            copyCodeBtn.textContent = '❌ Failed';
+            setTimeout(() => {
+                copyCodeBtn.textContent = '📋 Copy Code';
+            }, 2000);
+        }
+    });
+}
 
 function init() {
     elements.options.forEach(option => {
@@ -186,7 +283,6 @@ function init() {
         });
     });
 
-    // Keyboard support
     document.addEventListener('keydown', (e) => {
         if (isAnimating) return;
         const key = e.key.toLowerCase();
@@ -201,32 +297,27 @@ function init() {
             }
         }
     });
-
-    elements.resetBtn.addEventListener('click', resetGame);
 }
 
 function getComputerChoice() {
-    const keys = Object.keys(choices);
+    const keys = ['rock', 'paper', 'scissors'];
+    // Uses keys of choices object? No, strict strings to match
     return keys[Math.floor(Math.random() * keys.length)];
 }
 
 function playRound(userChoice) {
     isAnimating = true;
-
-    // 1. Show user's choice IMMEDIATELY
     elements.userHand.textContent = choices[userChoice].emoji;
 
-    // 2. Computer keeps thinking (shaking)
+    // Always show Hand for computer during animation (Start with rock/fist)
+    // regardless of theme, as requested ("shaking hand not any question mark")
     elements.compHand.textContent = '🤛';
-    elements.compHand.classList.add('shaking');
 
+    elements.compHand.classList.add('shaking');
     elements.resultMessage.textContent = 'Wait for it...';
     elements.resultMessage.className = '';
-
-    // Disable buttons
     elements.options.forEach(btn => btn.style.opacity = '0.5');
 
-    // Wait for shake
     setTimeout(() => {
         const compChoice = getComputerChoice();
         resolveRound(userChoice, compChoice);
@@ -235,15 +326,17 @@ function playRound(userChoice) {
 
 function resolveRound(userChoice, compChoice) {
     elements.compHand.classList.remove('shaking');
+    // Ensure choices[compChoice] exists. 
     elements.compHand.textContent = choices[compChoice].emoji;
-
     let result = '';
     let resultClass = '';
 
+    const beats = choices[userChoice].beats;
+    // Check win/draw
     if (userChoice === compChoice) {
         result = 'It\'s a Draw!';
         resultClass = 'text-draw';
-    } else if (choices[userChoice].beats === compChoice) {
+    } else if (beats === compChoice) {
         result = 'You Win!';
         resultClass = 'text-win';
         userScore++;
@@ -258,24 +351,17 @@ function resolveRound(userChoice, compChoice) {
     elements.resultMessage.textContent = result;
     elements.resultMessage.className = resultClass;
 
-    // Reset UI
-    setTimeout(() => {
-        isAnimating = false;
-        elements.options.forEach(btn => btn.style.opacity = '1');
-        elements.resetBtn.classList.remove('hidden');
-    }, 1000);
-}
+    // Instantly enable buttons for next round
+    isAnimating = false;
+    elements.options.forEach(btn => btn.style.opacity = '1');
 
-function resetGame() {
-    userScore = 0;
-    compScore = 0;
-    elements.userScore.textContent = '0';
-    elements.compScore.textContent = '0';
-    elements.resultMessage.textContent = 'Choose your weapon';
-    elements.resultMessage.className = '';
-    elements.userHand.textContent = '🤜';
-    elements.compHand.textContent = '🤛';
-    elements.resetBtn.classList.add('hidden');
+    // Optional: Reset message after a short delay if needed, but not blocking input
+    setTimeout(() => {
+        if (!isAnimating) {
+            elements.resultMessage.textContent = 'Choose your weapon';
+            elements.resultMessage.className = '';
+        }
+    }, 2000);
 }
 
 init();
