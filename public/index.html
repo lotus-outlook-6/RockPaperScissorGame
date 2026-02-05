@@ -8,6 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-twilight.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/line-numbers/prism-line-numbers.min.css"
+        rel="stylesheet" />
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -67,6 +70,62 @@
         <button id="reset-btn" class="reset-btn hidden">Play Again</button>
     </main>
 
+    <!-- Code Icon -->
+    <div class="code-icon-container" id="view-code-btn" title="View Source Code">
+        <span class="icon">&lt;/&gt;</span>
+    </div>
+
+    <!-- Code Panel (Chat Bubble Style) -->
+    <div id="code-panel" class="code-panel hidden">
+        <div class="panel-header">
+            <button id="toggle-comments-btn" class="toggle-btn">
+                👁️ Show Comments
+            </button>
+            <div class="spacer" style="flex:1"></div>
+            <button class="close-btn">&times;</button>
+        </div>
+        <div class="code-content">
+            <pre class="line-numbers"><code class="language-python">import random
+def delay():
+    l=["Rock","Paper","Scissors"]
+    for i in range(3):
+        print(l[i], flush=True)
+        import time
+        time.sleep(0.5)
+    for i in range(3):
+        print(".", end="", flush=True)
+        import time
+        time.sleep(0.5)
+    print()
+
+comp=random.randint(1,3)
+user=input("\nEnter r for Rock, p for Paper, s for Scissors: ")
+
+compDict={1:"Rock",2:"Paper",3:"Scissors"}
+userDict={"r":"Rock","p":"Paper","s":"Scissors"}
+
+
+print("Computer is choosing\n", end="")
+delay()
+
+print(f"\nComputer chose {compDict[comp]} and You chose {userDict[user]}")
+
+if compDict[comp] == userDict[user]:
+    print("Draw")
+elif (compDict[comp]=="Rock" and userDict[user]=="Scissors") or (compDict[comp]=="Paper" and userDict[user]=="Rock") or (compDict[comp]=="Scissors" and userDict[user]=="Paper"):
+    print("You Lose, Computer Wins")
+elif (compDict[comp]=="Rock" and userDict[user]=="Paper") or (compDict[comp]=="Paper" and userDict[user]=="Scissors") or (compDict[comp]=="Scissors" and userDict[user]=="Rock"):
+    print("You Win, Computer Lost")
+else:
+    print("Invalid Input")</code></pre>
+        </div>
+    </div>
+
+    <!-- Prism JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
     <script src="script.js"></script>
 </body>
 
