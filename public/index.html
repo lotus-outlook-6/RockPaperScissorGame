@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors | Cyber Edition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <main class="glass-container">
+        <header>
+            <h1>Rock Paper Scissors</h1>
+            <div class="score-board">
+                <div class="score-card user">
+                    <span class="label">YOU</span>
+                    <span id="user-score">0</span>
+                </div>
+                <div class="score-card comp">
+                    <span class="label">COMP</span>
+                    <span id="comp-score">0</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="game-area">
+            <div class="result-display">
+                <div class="hand-container" id="user-hand-container">
+                    <span class="player-label">YOU</span>
+                    <span class="hand-emoji" id="user-hand">🤜</span>
+                </div>
+                <div class="message-container">
+                    <h2 id="result-message">Choose your weapon</h2>
+                </div>
+                <div class="hand-container" id="comp-hand-container">
+                    <span class="player-label">COMP</span>
+                    <span class="hand-emoji" id="comp-hand">🤛</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="controls">
+            <button class="option-btn" data-choice="rock">
+                <div class="icon">🪨</div>
+                <span>Rock</span>
+            </button>
+            <button class="option-btn" data-choice="paper">
+                <div class="icon">📄</div>
+                <span>Paper</span>
+            </button>
+            <button class="option-btn" data-choice="scissors">
+                <div class="icon">✂️</div>
+                <span>Scissors</span>
+            </button>
+        </section>
+
+        <button id="reset-btn" class="reset-btn hidden">Play Again</button>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
