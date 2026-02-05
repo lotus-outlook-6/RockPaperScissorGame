@@ -1,42 +1,53 @@
-# Rock Paper Scissors Game 🪨📄✂️
+# Rock Paper Scissors - Cyber Edition �🤚✌️
 
-A classic Rock, Paper, Scissors game played against the computer, written in Python.
+A premium, high-fidelity web application based on the original Antigravity Rock Paper Scissors logic. Experience the classic game with a modern cyberpunk aesthetic and seamless mobile-optimized gameplay.
 
-## 🎮 Play Online
+## 🚀 Live Demo
+**Play it here**: [https://rockpaperscissorsgame-python.web.app](https://rockpaperscissorsgame-python.web.app)
 
-You can play this game right now in your browser without installing anything!
+---
+
+## ✨ Features
+- **Modern UI**: Smooth glassmorphism design with vibrant neon gradients.
+- **Theme Engine**: Toggle between classic **Hands** and modern **Objects** themes.
+- **Full Responsive**: Perfectly optimized for Desktop, Tablet, and Mobile screens.
+- **In-App Code View**: Peek behind the curtain! View the original Python game logic directly in the browser with syntax highlighting.
+- **Keyboard Support**: Play like a pro using `R`, `P`, and `S` keys.
+
+## 🛠️ Tech Stack
+- **Frontend**: Vanilla HTML5, CSS3, JavaScript (ES6+).
+- **Styling**: Advanced CSS Grid/Flexbox, Backdrop filters, and Keyframe animations.
+- **Syntax Highlighting**: Prism.js for code visualization.
+- **Hosting**: Firebase Hosting for global low-latency access.
+
+---
+
+## � Running Locally
+
+### 🌐 Web Version
+To run the modern web interface:
+1.  Open the `public` folder.
+2.  Launch `index.html` (recommended using a local server like "Live Server" in VS Code).
+
+### 🐍 Original Python Version
+The core logic started here! To run the console version online:
 
 [![Run on Replit](https://replit.com/badge/github/lotus-outlook-6/RockPaperScissorGame)](https://replit.com/github/lotus-outlook-6/RockPaperScissorGame)
 
-*(Note: The link above is now configured to point to your repository!)*
-
-## 🚀 How to Run Locally
-
-If you prefer to run it on your own machine:
-
-1.  **Install Python:** Make sure you have Python installed.
-2.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-    cd RockPaperScissorGame
-    ```
-3.  **Run the game:**
+Or run it on your own machine:
+1.  Ensure you have Python installed.
+2.  Run the main script:
     ```bash
     python main.py
     ```
 
+---
+
 ## 🕹️ How to Play
+1.  **Choose your weapon**: Click the Rock, Paper, or Scissors icons (or use your keyboard).
+2.  **Wait for the Comp**: Watch the animated computer fist reveal its move.
+3.  **Check the Score**: Watch your score grow as you dominate the computer!
+4.  **Peep the Code**: Click the `</>` icon in the top right to see how it all works.
 
-1.  Run the script.
-2.  The computer will make its choice (hidden).
-3.  Enter your choice:
-    - `r` for **Rock**
-    - `p` for **Paper**
-    - `s` for **Scissors**
-4.  The result (Win, Lose, or Draw) will be displayed.
+Developed with ❤️ by Kunal.
 
-## 📝 Features
-
-- **Random Computer Moves:** The computer plays unpredictably.
-- **Input Validation:** Handles invalid inputs gracefully.
-- **Dramatic Delay:** Suspenseful dots before revealing the winner!
