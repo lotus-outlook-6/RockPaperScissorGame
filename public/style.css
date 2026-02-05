@@ -865,8 +865,10 @@ pre[class*="language-"].line-numbers {
 /* Mobile Optimization */
 @media (max-width: 600px) {
     .glass-container {
-        padding: 1.25rem 0.75rem;
-        gap: 0.5rem;
+        padding: 2.25rem 0.75rem;
+        /* Increased vertical padding */
+        gap: 1.25rem;
+        /* Increased vertical gap */
         width: 95%;
         margin: 10px auto;
         max-width: 100vw;
@@ -888,17 +890,23 @@ pre[class*="language-"].line-numbers {
 
     .score-board {
         gap: 0.5rem;
+        margin-top: 1.5rem;
+        /* Lowered score boxes */
     }
 
     .score-card {
-        padding: 0.5rem;
+        padding: 0.8rem 0.5rem;
+        /* More vertical breathing room */
         min-width: 0;
         flex: 1;
+        border-radius: 12px;
         /* Equal width cards */
     }
 
     .score-card span[id$="-score"] {
-        font-size: 1.25rem;
+        font-size: 1.5rem;
+        /* Larger score visibility */
+        margin-top: 4px;
     }
 
     .game-area {
@@ -907,7 +915,24 @@ pre[class*="language-"].line-numbers {
 
     .hand-container {
         font-size: 2.5rem;
-        min-width: 60px;
+        min-width: 50px;
+        /* Reduced min-width to prevent pushing */
+        align-items: flex-start;
+        /* Default to start for user */
+    }
+
+    #comp-hand-container {
+        align-items: flex-end;
+        padding-right: 15px;
+        /* Shifting comp text/hand slightly to the left */
+        /* Align comp elements to the right edge */
+    }
+
+    #user-hand-container {
+        align-items: flex-start;
+        padding-left: 15px;
+        /* Shifting user text/hand slightly to the right for symmetry */
+        /* Align user elements to the left edge */
     }
 
     .hand-emoji {
@@ -943,11 +968,62 @@ pre[class*="language-"].line-numbers {
     .button-label {
         font-size: 0.6rem;
     }
+
+    /* Fixed View Source Modal for Mobile */
+    .code-panel {
+        width: 95% !important;
+        height: 90vh !important;
+        right: 2.5% !important;
+        left: 2.5% !important;
+        top: 50% !important;
+        transform: translateY(-50%) scale(0.9) !important;
+        transform-origin: center !important;
+    }
+
+    body.code-active .code-panel {
+        transform: translateY(-50%) scale(1) !important;
+    }
+
+    body.code-active .glass-container {
+        transform: none !important;
+        /* Don't shift background on mobile */
+        filter: blur(4px);
+        /* Just blur it instead */
+    }
+
+    .panel-header {
+        padding: 10px 15px;
+        flex-wrap: wrap;
+        /* Allow buttons to wrap if needed */
+        gap: 5px;
+    }
+
+    .panel-header .spacer {
+        display: none;
+        /* Hide spacer on small width */
+    }
+
+    .toggle-btn {
+        font-size: 0.7rem;
+        padding: 4px 8px;
+    }
+
+    .gutter {
+        width: 2.5rem;
+        /* Narrower gutter */
+        font-size: 0.8rem;
+    }
+
+    pre[class*="language-"] {
+        padding: 1rem !important;
+        font-size: 0.8rem !important;
+    }
 }
 
 @media (max-width: 400px) {
     .glass-container {
-        padding: 0.75rem 0.4rem;
+        padding: 1.75rem 0.4rem;
+        /* Increased vertical padding for ultra-small */
     }
 
     .hand-container {
