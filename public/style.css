@@ -189,10 +189,13 @@ header h1 {
 }
 
 #result-message {
-    font-size: 2.5rem;
+    font-size: 2rem;
+    /* Reduced slightly to fit */
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
+    white-space: nowrap;
+    /* Forces one line */
 }
 
 /* Controls */
@@ -227,8 +230,30 @@ header h1 {
     transform: translateY(0);
 }
 
-.option-btn .icon {
-    font-size: 2rem;
+/* Keyboard Key Style */
+.key-icon {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glass-border);
+    border-bottom: 4px solid rgba(0, 0, 0, 0.5);
+    /* 3D key effect */
+    border-radius: 8px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-muted);
+    transition: all 0.1s;
+}
+
+.option-btn:active .key-icon,
+.option-btn.pressed .key-icon {
+    border-bottom-width: 1px;
+    transform: translateY(3px);
+    color: var(--primary);
+    border-color: var(--primary);
 }
 
 .option-btn span {

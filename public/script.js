@@ -31,6 +31,22 @@ function init() {
     });
 
     elements.resetBtn.addEventListener('click', resetGame);
+
+    // Keyboard listener
+    document.addEventListener('keydown', (e) => {
+        if (isAnimating) return;
+        const key = e.key.toLowerCase();
+        const validKeys = ['r', 'p', 's'];
+
+        if (validKeys.includes(key)) {
+            const btn = document.querySelector(`.option-btn[data-key="${key}"]`);
+            if (btn) {
+                btn.classList.add('pressed'); // Add visual feedback
+                setTimeout(() => btn.classList.remove('pressed'), 200); // Remove after short delay
+                playRound(btn.dataset.choice);
+            }
+        }
+    });
 }
 
 function playRound(userChoice) {
