@@ -6,9 +6,9 @@ A classic Rock, Paper, Scissors game played against the computer, written in Pyt
 
 You can play this game right now in your browser without installing anything!
 
-[![Run on Replit](https://replit.com/badge/github/YOUR_USERNAME/YOUR_REPO_NAME)](https://replit.com/github/YOUR_USERNAME/YOUR_REPO_NAME)
+[![Run on Replit](https://replit.com/badge/github/lotus-outlook-6/RockPaperScissorGame)](https://replit.com/github/lotus-outlook-6/RockPaperScissorGame)
 
-*(Note: Once you fork/upload this to GitHub, replace `YOUR_USERNAME` and `YOUR_REPO_NAME` in the link above with your actual GitHub details so the button works instantly!)*
+*(Note: The link above is now configured to point to your repository!)*
 
 ## 🚀 How to Run Locally
 
