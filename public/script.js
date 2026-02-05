@@ -35,15 +35,16 @@ function init() {
 
 function playRound(userChoice) {
     isAnimating = true;
-    
-    // Reset hands to rock for shaking animation
-    elements.userHand.textContent = '🤜';
-    elements.compHand.textContent = '🤛';
-    elements.resultMessage.textContent = 'Wait for it...';
-    elements.resultMessage.className = ''; // remove color classes
 
-    // Add shake animation
-    elements.gameArea.classList.add('shake-animation');
+    // 1. Show user's choice IMMEDIATELY
+    elements.userHand.textContent = choices[userChoice].emoji;
+
+    // 2. Computer keeps thinking (shaking)
+    elements.compHand.textContent = '🤛'; // Ensure it's the rock/fist
+    elements.compHand.classList.add('shaking'); // Only shake computer
+
+    elements.resultMessage.textContent = 'Wait for it...';
+    elements.resultMessage.className = '';
 
     // Disable buttons
     elements.options.forEach(btn => btn.style.opacity = '0.5');
@@ -62,9 +63,10 @@ function getComputerChoice() {
 }
 
 function resolveRound(userChoice, compChoice) {
-    elements.gameArea.classList.remove('shake-animation');
-    
-    // Reveal hands
+    // Stop shaking
+    elements.compHand.classList.remove('shaking');
+
+    // Reveal computer hand
     elements.userHand.textContent = choices[userChoice].emoji;
     elements.compHand.textContent = choices[compChoice].emoji;
 

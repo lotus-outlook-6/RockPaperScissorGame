@@ -235,44 +235,39 @@ header h1 {
 }
 
 /* Animations */
-.shake-animation #user-hand,
-.shake-animation #comp-hand {
-    animation: shake 1.5s ease-in-out;
+.shaking {
+    animation: shake-comp 1.5s ease-in-out infinite;
+    display: inline-block;
 }
 
-@keyframes shake {
+@keyframes shake-comp {
     0% {
-        transform: translateY(0) scaleX(-1);
+        transform: translateY(0);
     }
 
     15% {
-        transform: translateY(-30px) scaleX(-1);
+        transform: translateY(-30px);
     }
 
     30% {
-        transform: translateY(0) scaleX(-1);
+        transform: translateY(0);
     }
 
     45% {
-        transform: translateY(-30px) scaleX(-1);
+        transform: translateY(-30px);
     }
 
     60% {
-        transform: translateY(0) scaleX(-1);
+        transform: translateY(0);
     }
 
     75% {
-        transform: translateY(-30px) scaleX(-1);
+        transform: translateY(-30px);
     }
 
     100% {
-        transform: translateY(0) scaleX(-1);
+        transform: translateY(0);
     }
-}
-
-/* Override shake for computer (no scaleX flip needed usually, but we keep consistency if emoji direction changes) */
-.shake-animation #comp-hand {
-    animation-name: shake-comp;
 }
 
 @keyframes shake-comp {
