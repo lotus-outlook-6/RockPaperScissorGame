@@ -189,13 +189,15 @@ header h1 {
 }
 
 #result-message {
-    font-size: 2rem;
-    /* Reduced slightly to fit */
+    font-size: 1.5rem;
+    /* Reduced to fit long text */
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     white-space: nowrap;
-    /* Forces one line */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 /* Controls */
